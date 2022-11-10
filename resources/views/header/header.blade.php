@@ -75,7 +75,7 @@
               <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <div class="navbar-nav mr-2">
                   <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-itens-center">
-                    <li class="nav-item"><a class="links-ft" href="/sobre"> Sobre nós  </a></li>
+                    <li class="nav-item"><a class="links-ft" href="/sobre"> Sobre </a></li>
                     <li class="nav-item"><a class="links-ft" href="/aplicacoes"> Aplicações </a></li>
                     <li class="nav-item"><a class="links-ft" href="/exemplos"> Exemplos  </a></li>
                     <li class="nav-item"><a class="links-ft" href="/contato"> Contato  </a></li>
