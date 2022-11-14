@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet" type="text/css">
 <body>
     <div class="d-flex justify-content-end mr-2 mt-2"> 
         <!-- Button trigger modal -->
@@ -47,7 +48,8 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-           
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
+
 </body>
 @include('header.footer')
 
@@ -66,7 +68,7 @@ $(document).ready(function () {
             { data: 'descricao' },
             { data: 'valor' },
             { data: 'data_criado' },
-            { data: 'foto'},
+            { data: 'foto', visible: false},
             { data: 'action',  visible: true },
          ],
          columnDefs: [
@@ -129,10 +131,18 @@ $('body').on('click', '.editarProduto', function () {
         datatype: "json",
           success: function(evento) {
                 jQuery.each(evento.success, function(key,value){
-                    alert('funciona: '+value.nome);
+                    // alert('funciona: '+value.data_criado);
                     $('#exampleModal').modal('toggle');
                     // $('#myModal').modal('show');
                     // $('#myModal').modal('hide');
+                    $('#id').val( value.id );
+                    $('#nome').val( value.nome );
+                    $('#codigo').val( value.codigo );
+                    $('#descricao').val( value.descricao );
+                    $('#valor').val( value.valor );
+                    var data_formatada = value.data_criado;
+                    $('#datepicker').val( data_formatada.replace(/(\d*)-(\d*)-(\d*).*/, '$3/$2/$1') );
+                    $('#foto').val( value.foto );
                 });
                 
         },
@@ -143,9 +153,31 @@ $('body').on('click', '.editarProduto', function () {
 });
 
 $('body').on('click', '.excluirProduto', function () {
-      var product_id = $(this).data('id');
-   
-    alert(product_id); 
+    var id = $(this).data('id');
+    $.ajax({
+            'processing': true, 
+            'serverSide': true,
+            type: "GET",
+            data:{ id: id },
+            url: "/deletaporajax",
+            datatype: "json",
+            success: function(evento) {
+                Swal.fire({
+                        title: 'Produto Excluido !',
+                        type: 'error',
+                        // showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'Não'
+                        }).then((result) => {
+                       
+                          location.reload();
+                        
+            });
+            },
+            error:    function(evento) {}     
+        });
 });
 
 </script>

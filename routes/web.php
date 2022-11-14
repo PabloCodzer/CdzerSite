@@ -32,5 +32,6 @@ Route::get('/contato', [ContatoController::class,'index'] );
 Route::get('/exemplos', [ExemplosController::class,'index'] ); 
 Route::get('/datablessimples', [ExemplosController::class,'DataTablesSimples'] ); 
 Route::get('/datablesajax', [ExemplosController::class,'DataTableAjax'] );
-Route::get('/cadastroajax', [ExemplosController::class,'CadastroAjax'] );  
+Route::post('/cadastroajax', [ExemplosController::class,'CadastroAjax'] );  
 Route::get('/editaporajax', [ExemplosController::class,'EditaCadastroAjax'] );
+Route::get('/deletaporajax', [ExemplosController::class,'DeletaCadastroAjax'] );

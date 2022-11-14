@@ -8,6 +8,9 @@ use App\Models\produtos;
 use DB;
 use App\Http\Controllers\Validador;
 
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+
 class ExemplosController extends Controller
 {
     /**
@@ -72,13 +75,24 @@ class ExemplosController extends Controller
     }
 
     public Function CadastroAjax( Request $request)
-    {
+    {   
+        $produtos = $request->all() ;
+        $id = array();
+        foreach($produtos as $i=>$p)
+        {
+            if( $i == 'id' )
+            {
+                $id =  $p;
+            }
+        } 
         $campos_para_validacao = [
             'nome' => 'required',
             'codigo' => 'required',
             'descricao' => 'required',
             'valor' => 'required',
+            // 'foto'  => 'required|mines:jpeg,png,jpg,gif,svg|max:2048',
         ];
+
         if ( $request->ajax() ) 
         {
             $validator = \Validator::make($request->all(), $campos_para_validacao, 
@@ -87,15 +101,26 @@ class ExemplosController extends Controller
                 'codigo.required' => 'codigo',
                 'descricao.required' => 'descricao',
                 'valor.required' => 'valor',
+                // 'foto.required' => 'foto',
             ]);
-        //    return json_encode(['error' => "mama minha rola" ]);
 
            if ($validator->fails())
            {
                return response()->json(['errors'=>$validator->errors()->all()]);
            }
-            produtos::create($request->all());
-            return response()->json(['success'=>'Produto adicionado com sucesso!!']);
+           if( $id == NULL )
+            {    
+                // $path = $request->file('foto')->store('fotocadastro'); 
+               $produto_criado =  produtos::create( $produtos );
+                return response()->json(['success'=>'Produto adicionado com sucesso!!', 'id'=>$validator]);
+            }
+            else
+            {
+                $update = produtos::find($id );
+                $update->update($request->all());
+                return response()->json(['success'=>'Produto alterado com sucesso!!', 'id'=> $id]);
+            }
+            
         }
     }
 
@@ -111,5 +136,24 @@ class ExemplosController extends Controller
             return response()->json(['errors'=> 'Não encontrado']);
         }
        
+    }
+
+    public function DeletaCadastroAjax( Request $request )
+    {
+        $produtos = $request->all() ;
+        $id = array();
+        foreach($produtos as $i=>$p)
+        {
+            if( $i == 'id' )
+            {
+                $id =  $p;
+            }
+        } 
+        if ( $request->ajax() ) 
+        {
+            $delete = produtos::find( $id );
+            $delete->delete($request->all());
+            return response()->json(['success'=>'Produto excluido com sucesso!!', 'id'=> $id]);
+        }
     }
 }

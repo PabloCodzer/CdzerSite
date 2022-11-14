@@ -15,13 +15,13 @@
             </ul>
         </div>
         <div class="col-md-6 card">
-            <h2> Exemplos com Datas </h2>
+            <h2> UI/UX JAVAScript </h2>
             <ul>
                 <li>
-                    <a> Datas utilizando js  </a>
+                    <a> Graficos js  </a>
                 </li>
                 <li>
-                    <a> Datepicker </a>
+                    <a> Import de arquivos. </a>
                 </li>
             </ul>
         </div>
