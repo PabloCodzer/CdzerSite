@@ -23,6 +23,9 @@
                 <li>
                     <a> Import de arquivos. </a>
                 </li>
+                <li>
+                    <a href="/dash_admin"> Dashbord Admin. </a>
+                </li>
             </ul>
         </div>
     </div>

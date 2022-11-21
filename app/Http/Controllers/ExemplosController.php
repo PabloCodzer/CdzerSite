@@ -156,4 +156,9 @@ class ExemplosController extends Controller
             return response()->json(['success'=>'Produto excluido com sucesso!!', 'id'=> $id]);
         }
     }
+
+    public function DashAdmin( Request $request )
+    {
+        return view('dashMetas');
+    }
 }

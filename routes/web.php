@@ -35,3 +35,4 @@ Route::get('/datablesajax', [ExemplosController::class,'DataTableAjax'] );
 Route::post('/cadastroajax', [ExemplosController::class,'CadastroAjax'] );  
 Route::get('/editaporajax', [ExemplosController::class,'EditaCadastroAjax'] );
 Route::get('/deletaporajax', [ExemplosController::class,'DeletaCadastroAjax'] );
+Route::get('/dash_admin', [ExemplosController::class,'DashAdmin'] );
